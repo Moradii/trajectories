@@ -331,18 +331,19 @@ print.KTrack <- function(x, ...){
   print("variability area of K-function", ...)
 }
 
-plot.KTrack <- function(x,type="l",col= "grey70",...){
+plot.KTrack <- function(x,type="l",col= "grey70",cex=1,...){
   if (!requireNamespace("spatstat", quietly = TRUE))
     stop("spatstat required: install first?")
   ylim <- c(min(c(x$lowk,x$theo)),max(c(x$upk,x$theo)))
-  plot(x$r,x$lowk,ylim=ylim,type=type,xlab="",ylab="",...)
-  title(ylab=expression(K[inhom](r)),xlab="r", line=2.2, cex.lab=1.2)
+  plot(x$r,x$lowk,ylim=ylim,type=type,ylab=expression(K[inhom](r)),xlab="r",...)
   points(x$r,x$upk,type=type)
   polygon(c(x$r, rev(x$r)), c(x$upk, rev(x$lowk)),
           col = col, border = NA)
   points(x$r,x$theo,type=type,col=2)
   points(x$r,x$avek,type=type)
-  legend(0,max(c(x$upk,x$theo)),col = c(2,0,1),legend=c(expression(K[inhom]^{pois}),"",expression(bar(K)[inhom])),lty=c(1,1))
+  legend(0,max(c(x$upk,x$theo)),col = c(2,0,1),
+         legend=c(expression(K[inhom]^{pois}),"",expression(bar(K)[inhom])),
+         lty=c(1,1),cex = cex)
 }
 
 pcfinhom.Track <- function(X,timestamp,
@@ -414,7 +415,7 @@ print.gTrack <- function(x, ...){
   print("variability area of pair correlatio function", ...)
 }
 
-plot.gTrack <- function(x,type="l",col= "grey70",...){
+plot.gTrack <- function(x,type="l",col= "grey70",cex=1,...){
   if (!requireNamespace("spatstat", quietly = TRUE))
     stop("spatstat required: install first?")
   ylim <- c(min(x$lowg),max(x$upg))
@@ -425,7 +426,9 @@ plot.gTrack <- function(x,type="l",col= "grey70",...){
   points(x$r,x$theo,type=type,col=2)
   points(x$r,x$aveg,type=type)
   legend(0.01*max(x$r),max(x$upg),col = c(2,0,1),
-         legend=c(expression(g[inhom]^{pois}),"",expression(bar(g)[inhom])),lty=c(1,1))
+         legend=c(expression(g[inhom]^{pois}),"",
+                  expression(bar(g)[inhom])),
+         lty=c(1,1),cex = cex)
 }
 
 auto.arima.Track <- function(X,...){
